@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { UserDataService } from './user-data.service';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -7,9 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
   onUserSubmit(f){
-    console.log(f);
+    this._data.addUser(f.value);
   }
-  constructor() { }
+  constructor(private _data:UserDataService) { }
 
   ngOnInit() {
   }

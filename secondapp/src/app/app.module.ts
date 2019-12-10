@@ -20,6 +20,11 @@ import { HomeComponent } from './home/home.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
+import { UserDisplayComponent } from './user/user-display/user-display.component';
+import { UserdetailsComponent } from './user/userdetails/userdetails.component';
+import { EmpListComponent } from './emp-list/emp-list.component';
+import { EmpAddComponent } from './emp-list/emp-add/emp-add.component';
+import { EmpEditComponent } from './emp-list/emp-edit/emp-edit.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +43,12 @@ import { UserComponent } from './user/user.component';
     HomeComponent,
     PagenotfoundComponent,
     HeaderComponent,
-    UserComponent
+    UserComponent,
+    UserDisplayComponent,
+    UserdetailsComponent,
+    EmpListComponent,
+    EmpAddComponent,
+    EmpEditComponent
   ],
   imports: [
     BrowserModule,
