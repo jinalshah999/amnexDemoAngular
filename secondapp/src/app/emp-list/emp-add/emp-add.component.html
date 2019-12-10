@@ -2,15 +2,15 @@
 <form (ngSubmit)="onUserAdd(f)" #f="ngForm" >
   <div class="form-group">
     <label>Emp Id</label>
-    <input name="emp_id" required minlength=5  ngModel #emp_id="ngModel" class="form-control">
-    <label class="alert alert-danger" *ngIf="!emp_id.hasError('required') && !emp_id.pristine"  >Emp Id > 5</label>
+    <input name="emp_id" required   ngModel #emp_id="ngModel" class="form-control">
+    <label class="alert alert-danger" *ngIf="!emp_id.hasError('required') && !emp_id.pristine"  >Only Numbers</label>
     <label class="alert alert-danger" *ngIf="emp_id.hasError('required') && !emp_id.pristine"  >Emp Id is required</label>
 
   </div>
   <div class="form-group">
     <label>Emp Name</label>
-    <input name="emp_name" ngModel class="form-control">
-    <label>Emp Name is required</label>
+    <input name="emp_name" ngModel #emp_name="ngModel" pattern="[a-zA-Z ]*" class="form-control">
+    <label class="alert alert-danger" *ngIf="emp_name.hasError('pattern') && !emp_name.pristine " >only alphabet</label>
   </div>
   <div class="form-group">
     <label>Emp Salary</label>
