@@ -1,0 +1,64 @@
+
+<div>
+  <p>Without JSON pipe:</p>
+  <pre>{{object}}</pre>
+  <p>With JSON pipe:</p>
+  <pre>{{object | json}}</pre>
+</div>
+<h1>{{dt|date:'dd/MM/yy'}}</h1>
+<h1  >Employee Form</h1>
+<p [style.display]="'block'" >jinal shah</p>
+<hr>
+<input class="form-control" placeholder="enter id" [(ngModel)]="obj_emp.emp_id"  >
+<input class="form-control" placeholder="enter fname" [(ngModel)]="obj_emp.emp_fname" >
+<input class="form-control" placeholder="enter lname" [(ngModel)]="obj_emp.emp_lname" >
+<input class="form-control" placeholder="enter salary" [(ngModel)]="obj_emp.emp_salary"  >
+<button class="form-control btn btn-primary" (click)="onEmpAdd()"  > Add Employee </button>
+<button (click)="onRefreshClick()" >Refresh</button>
+<hr>
+<div *ngIf="emp_list.length!=0;else elseBlock" >
+  <input placeholder="Search" class="form-control" #input1 (keyup)="0" >
+<table class="table">
+  <thead>
+    <th>Emp Id</th>
+    <th>Emp FName</th>
+    <th>Emp LName</th>
+    <th>Emp Salary</th>
+    <th>Action</th>
+  </thead>
+<tbody>
+  <!-- ;trackBy:trackByEmpId -->
+  <tr  *ngFor="let item of emp_list | filter : input1.value " >
+    <td>{{item.emp_id}}</td>
+    <td>{{item.emp_fname }}</td>
+    <td>{{item.emp_lname | titlecase}}</td>
+    <td>{{item.emp_salary| currency:'INR':'symbol':'2.1-3'   }}</td>
+    <td>
+        <button (click)="ontodoDelete(item)" type="button" class="btn btn-default" aria-label="Left Align">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </button>
+    </td>
+  </tr>
+  <tr *ngIf="emp_list.length==0">
+    <td colspan="5" >
+      no records
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<ng-template #elseBlock>
+<div >
+  <h1>No Data Found.</h1>
+</div>
+</ng-template>
+
+<ul>
+  <li *ngFor="let item of emp_list_interface" >{{item.f_name}}</li>
+</ul>
+
+
+
+
+
+

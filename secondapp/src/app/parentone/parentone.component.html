@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="col-md-4">
+    <h1>Count from parent1 component {{cnt}}</h1>
+    <table class="table"  >
+      <thead>
+        <th></th>
+        <th></th>
+        <th></th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of arr">
+          <td>{{item.id}}</td>
+          <td>{{item.title}}</td>
+          <td><button type="button" (click)="onTodoClick(item)" class="btn btn-default btn-lg">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </button></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+  <div class="col-md-4">
+    <app-childone></app-childone>
+  </div>
+  <div class="col-md-4">
+    <app-childtwo></app-childtwo>
+  </div>
+</div>

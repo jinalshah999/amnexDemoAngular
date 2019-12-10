@@ -1,0 +1,218 @@
+<h3>ngFor Basic</h3>
+<br />
+<select class="form-control col-md-2">
+  <option *ngFor="let item of months">{{item}}</option>
+</select>
+
+<hr />
+
+<h3>Index with *ngFor directive</h3>
+<br />
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <th>Index</th>
+    <th>#</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Department</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of employeeList; let i = index">
+      <td>{{i}}</td>
+      <td>{{item.Id}}</td>
+      <td>{{item.Name}}</td>
+      <td>{{item.Gender}}</td>
+      <td>{{item.Department}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3>Index with *ngFor directive - starts with 1</h3>
+<br />
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <th>Index</th>
+    <th>#</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Department</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of employeeList; let i = index">
+      <td>{{i+1}}</td>
+      <td>{{item.Id}}</td>
+      <td>{{item.Name}}</td>
+      <td>{{item.Gender}}</td>
+      <td>{{item.Department}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+
+<h3>Index with *ngFor directive - reverse loop</h3>
+<br />
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <th>#</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Department</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of employeeList.reverse()">
+      <td>{{item.Id}}</td>
+      <td>{{item.Name}}</td>
+      <td>{{item.Gender}}</td>
+      <td>{{item.Department}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+<h3>Index with *ngFor directive - first & last</h3>
+<br />
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <th>#</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Department</th>
+    <th>Is First?</th>
+    <th>Is Last?</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of employeeList.reverse(); let f=first; let l=last">
+      <td>{{item.Id}}</td>
+      <td>{{item.Name}}</td>
+      <td>{{item.Gender}}</td>
+      <td>{{item.Department}}</td>
+      <td>{{f}}</td>
+      <td>{{l}}</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <th>#</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Department</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of employeeList; let f=first; let l=last" [ngClass]="{ first: f, last: l }">
+      <td>{{item.Id}}</td>
+      <td>{{item.Name}}</td>
+      <td>{{item.Gender}}</td>
+      <td>{{item.Department}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+<h3>Index with *ngFor directive - even & odd</h3>
+<br />
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <th>#</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Department</th>
+    <th>Is Even?</th>
+    <th>Is Odd?</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of employeeList; let ev=even;let od=odd">
+      <td>{{item.Id}}</td>
+      <td>{{item.Name}}</td>
+      <td>{{item.Gender}}</td>
+      <td>{{item.Department}}</td>
+      <td>{{ev}}</td>
+      <td>{{od}}</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <th>#</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Department</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of employeeList; let ev=even;let od=odd" [ngClass]="{ odd: od, even: ev }">
+      <td>{{item.Id}}</td>
+      <td>{{item.Name}}</td>
+      <td>{{item.Gender}}</td>
+      <td>{{item.Department}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+<h3>Index with *ngFor directive - trackBy</h3>
+<br />
+<table class="table table-bordered">
+  <thead class="thead-light">
+    <th>#</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>Department</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of employeeList;let ev=even;let od=odd;trackBy:trackByEmployeeId" [ngClass]="{ odd: od, even: ev }">
+      <td>{{item.Id}}</td>
+      <td>{{item.Name}}</td>
+      <td>{{item.Gender}}</td>
+      <td>{{item.Department}}</td>
+    </tr>
+  </tbody>
+</table>
+<button class="form-control col-md-2" (click)="GetMoreEmployee()">Get More Employee</button>
+
+<hr />
+<h3>Nested *ngFor</h3>
+<br />
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let hue of hueLightData">
+    {{hue.Name}}
+    <ul class="list-group">
+
+      <li class="list-group-item" *ngFor="let light of hue.Lights">
+        {{light.Name}}
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+<h3>ngSwitch ngSwitchCase ngSwitchDefault</h3>
+<br />
+<select class="form-control col-md-2" [(ngModel)]="selectedValue">
+  <option *ngFor="let item of items" [value]="item.Name">{{item.Name}}</option>
+</select>
+<br />
+<div [ngSwitch]="selectedValue">
+  <div *ngSwitchCase="'One'">
+    <span>One is Selected.</span>
+  </div>
+  <div *ngSwitchCase="'Two'">
+    <span>Two is Selected.</span>
+  </div>
+  <div *ngSwitchCase="'Three'">
+    <span>Three is Selected.</span>
+  </div>
+  <div *ngSwitchCase="'Four'">
+    <span>Four is Selected.</span>
+  </div>
+  <div *ngSwitchCase="'Five'">
+    <span>Five is Selected.</span>
+  </div>
+  <div *ngSwitchDefault>
+    <span>Default Option.</span>
+  </div>
+</div>

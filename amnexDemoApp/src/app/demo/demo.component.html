@@ -1,0 +1,28 @@
+<h1>{{str}}</h1>
+<ng-content>
+
+</ng-content>
+<button (click)="onClick()" [disabled]="flag" >Click Me</button>
+
+<input type="text" [(ngModel)]="str1">
+
+<h1>{{str1}}</h1>
+
+<input #inputdemo (keyup)="0" >
+<h1>{{inputdemo.value}}</h1>
+
+<input [(ngModel)]="no1" >
+<input [(ngModel)]="no2">
+<button (click)="onAdd()" >Add</button>
+<h1>{{no1+no2}}</h1>
+
+
+
+<input  #input1>
+<input #input2 >
+<button (click)="onAdd1(input1.value,input2.value)" >Add</button>
+<h1>{{ans1}}</h1>
+
+
+
+

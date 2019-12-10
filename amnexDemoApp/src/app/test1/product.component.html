@@ -1,0 +1,58 @@
+<div style="padding: 10px;">
+  <h3>Products</h3>
+  <button class="btn btn-info" (click)="CanAddNewProduct()">New Product</button>
+  <br /><br />
+  <div *ngIf="canAddProduct" style="border: 1px solid lightgray; padding: 10px; border-radius: 5px">
+    <input class="form-control col-md-2" placeholder="Id" #txtProductId /><br />
+    <input class="form-control col-md-2" placeholder="Title" #txtProductTitle /><br />
+    <select class="form-control col-md-2" #drpMfg>
+      <option value="Fastrack">Fastrack</option>
+      <option value="Wrangler">Wrangler</option>
+      <option value="Bewakoof">Bewakoof</option>
+      <option value="Puma">Puma</option>
+      <option value="Charm">Charm</option>
+    </select><br />
+    <input class="form-control col-md-2" placeholder="Date" #txtProductDate /><br />
+    <input class="form-control col-md-2" placeholder="Price" #txtProductPrice /><br />
+    <label class="checkbox-inline"><input type="checkbox" value="Black" (change)="setColor(color1.checked, color1.value)" #color1 />Black</label> &nbsp;
+    <label class="checkbox-inline"><input type="checkbox" value="White" (change)="setColor(color2.checked, color2.value)" #color2 />White</label> &nbsp;
+    <label class="checkbox-inline"><input type="checkbox" value="Brown" (change)="setColor(color3.checked, color3.value)" #color3 />Brown</label> &nbsp;
+    <label class="checkbox-inline"><input type="checkbox" value="Blue"  (change)="setColor(color4.checked, color4.value)" #color4 />Blue</label>
+    <br />
+    <label class="radio-inline"><input type="radio" name="available" value="true" #rbtnAvailable />Available</label> &nbsp;&nbsp;
+    <label class="radio-inline"><input type="radio" name="available" value="false" #rbtnNotAvailable />Not Available</label>
+    <br /><br />
+    <button class="btn btn-success"
+      (click)="AddProduct(txtProductId.value, txtProductTitle.value, drpMfg.value, txtProductDate.value, txtProductPrice.value, rbtnAvailable.value, rbtnNotAvailable.value)">Save
+      Product</button>
+  </div>
+  <br />
+  <table class="table table-bordered">
+    <thead class="thead-dark">
+      <th>#</th>
+      <th><a (click)="setSortColumnAndOrder('title')" style="cursor: pointer">Title</a></th>
+      <th>Menufecture</th>
+      <th>Menufecture Date</th>
+      <th (click)="setSortColumnAndOrder('price')" style="cursor: pointer;">Price</th>
+      <th>Color</th>
+      <th>Available</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of ProductList | sorting:flag:orderDir" [ngClass]="{notavailable: !item.Product_Available}">
+        <td>{{item.Product_Id}}</td>
+        <td>{{item.Product_Title | uppercase}}</td>
+        <td>{{item.Product_MFG}}</td>
+        <td>{{item.Product_MFG_Data | date: 'mediumDate'}}</td>
+        <td>{{item.Product_Price | currency: 'INR':'symbol':'4.2-2'}}</td>
+        <td>{{item.Product_Color}}</td>
+        <td><span *ngIf="item.Product_Available">Yes</span><span *ngIf="!item.Product_Available">No</span></td>
+        <td>
+          <button type="button" class="btn btn-danger btn-sm" (click)="RemoveProduct(item)">Remove</button>
+          &nbsp;&nbsp;
+          <button type="button" class="btn btn-primary btn-sm" (click)="UpdateProduct(item)">Update</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

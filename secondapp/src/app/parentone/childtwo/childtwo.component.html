@@ -1,0 +1,18 @@
+<h1>Count from child two {{cnt}}</h1>
+<button (click)="onClick()" >Increment Count from Child2</button>
+<table class="table"  >
+  <thead>
+    <th></th>
+    <th></th>
+    <th></th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of arr">
+      <td>{{item.id}}</td>
+      <td>{{item.title}}</td>
+      <td><button type="button" (click)="onTodoClick(item)" class="btn btn-default btn-lg">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+      </button></td>
+    </tr>
+  </tbody>
+</table>
