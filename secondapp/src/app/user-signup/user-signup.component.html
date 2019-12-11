@@ -1,15 +1,27 @@
 <div class="container">
-  <form [formGroup]="user_signup" (ngSubmit)="onUserAdd()" >
+  <form [formGroup]="user_signup" (ngSubmit)="onUserAdd()">
     <div class="form-group">
-      <input formControlName="user_name" class="form-control" placeholder="Enter User Name" >
-    <label class="alert alert-danger" *ngIf="user_signup.get('user_name').hasError('required') && !user_signup.get('user_name').pristine " >Username is required</label>
-    <label class="alert alert-danger" *ngIf="user_signup.get('user_name').hasError('minlength') && !user_signup.get('user_name').pristine " >Username shoule be > 5</label>
-    <label class="alert alert-danger" *ngIf="user_signup.get('user_name').hasError('pattern') && !user_signup.get('user_name').pristine " >Only Char</label>
+      <input formControlName="user_name" class="form-control" placeholder="Enter User Name">
+      <label class="alert alert-danger"
+        *ngIf="user_signup.get('user_name').hasError('required') && !user_signup.get('user_name').pristine ">Username is
+        required</label>
+      <label class="alert alert-danger"
+        *ngIf="user_signup.get('user_name').hasError('minlength') && !user_signup.get('user_name').pristine ">Username
+        shoule be > 5</label>
+      <label class="alert alert-danger"
+        *ngIf="user_signup.get('user_name').hasError('pattern') && !user_signup.get('user_name').pristine ">Only
+        Char</label>
     </div>
-    <div class="form-group">
-      <input formControlName="user_password"  type="password" class="form-control" placeholder="Enter User Password" >
+    <div formGroupName="password_group" >
+      <div class="form-group">
+        <input formControlName="user_password" type="password" class="form-control" placeholder="Enter User Password">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" formControlName="user_confirm_password">
+      </div>
+      <label class="alert alert-danger" *ngIf="user_signup.get('password_group').hasError('sarkhanathi') && !user_signup.get('password_group').pristine  "  >not same</label>
     </div>
-    <button type="submit" class="form-control btn btn-primary"  >Add User</button>
+    <button type="submit" class="form-control btn btn-primary">Add User</button>
   </form>
   <br>value {{user_signup.value |json }}
 </div>
