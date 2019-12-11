@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from "@angular/forms";
+import { FormsModule,ReactiveFormsModule } from "@angular/forms";
 
 import { routingarr } from "./app.routing";
 
@@ -25,6 +25,8 @@ import { UserdetailsComponent } from './user/userdetails/userdetails.component';
 import { EmpListComponent } from './emp-list/emp-list.component';
 import { EmpAddComponent } from './emp-list/emp-add/emp-add.component';
 import { EmpEditComponent } from './emp-list/emp-edit/emp-edit.component';
+import { SignupComponent } from './signup/signup.component';
+import { UserSignupComponent } from './user-signup/user-signup.component';
 
 @NgModule({
   declarations: [
@@ -48,11 +50,14 @@ import { EmpEditComponent } from './emp-list/emp-edit/emp-edit.component';
     UserdetailsComponent,
     EmpListComponent,
     EmpAddComponent,
-    EmpEditComponent
+    EmpEditComponent,
+    SignupComponent,
+    UserSignupComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     routingarr
   ],
   providers: [],
