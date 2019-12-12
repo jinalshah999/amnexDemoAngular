@@ -36,6 +36,19 @@
       <label class="alert alert-danger" *ngIf="user_signup.get('user_phone').hasError('required') && !user_signup.get('user_phone').pristine  "  >Phone is reuired</label>
 
     </div>
+    <div class="form-group">
+      <select class="form-control" formControlName="user_city" >
+        <option value="-1" >Select City</option>
+        <option *ngFor="let item of cities" [value]="item"  >{{item}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-primary" (click)="onAddHobbyClick()"  >Add Hobby</button>
+      <div formArrayName="user_hobbies" *ngFor="let item of getHobbies();let i=index;"  class="form-group">
+        <input class="form-control"  [formControlName]="i">
+        <button (click)="onHobbyRemove(i)" class="btn btn-danger" >Delete</button>
+      </div>
+    </div>
     <button type="submit" class="form-control btn btn-primary">Add User</button>
   </form>
   <br>value {{user_signup.value |json }}

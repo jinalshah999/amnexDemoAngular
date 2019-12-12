@@ -38,6 +38,7 @@ export class SignupComponent implements OnInit {
       user_notification: new FormControl("email")
     });
 
+
     this.signupForm
       .get("user_notification")
       .valueChanges.subscribe(x => this.setNotificationValidation(x));

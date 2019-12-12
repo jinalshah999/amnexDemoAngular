@@ -3,7 +3,8 @@ import {
   FormGroup,
   FormControl,
   Validators,
-  AbstractControl
+  AbstractControl,
+  FormArray
 } from "@angular/forms";
 
 @Component({
@@ -15,6 +16,7 @@ export class UserSignupComponent implements OnInit {
   user_signup: FormGroup;
   constructor() {}
   invalidNames: string[] = ["jinal", "shah"];
+  cities: string[] = ["ahmedabad", "surat", "baroda"];
   ngOnInit() {
     this.user_signup = new FormGroup({
       user_name: new FormControl(null, [
@@ -34,16 +36,27 @@ export class UserSignupComponent implements OnInit {
         Validators.required,
         Validators.email
       ]),
-      user_phone: new FormControl(null)
+      user_phone: new FormControl(null),
+      user_city: new FormControl("ahmedabad", Validators.required),
+      user_hobbies: new FormArray([])
     });
-    this.user_signup.get("user_notification").valueChanges.subscribe(
-      x=>this.setValidation(x)
-    );
+    this.user_signup
+      .get("user_notification")
+      .valueChanges.subscribe(x => this.setValidation(x));
   }
   onUserAdd() {
     console.log(this.user_signup);
   }
-
+  getHobbies() {
+    return (<FormArray>this.user_signup.get("user_hobbies")).controls;
+  }
+  onAddHobbyClick() {
+    const cntrl=new FormControl(null);
+    (<FormArray> this.user_signup.get('user_hobbies')).push(cntrl);
+  }
+  onHobbyRemove(i){
+    (<FormArray>this.user_signup.get('user_hobbies')).removeAt(i);
+  }
   setValidation(value: string): void {
     let emailControl = this.user_signup.get("user_email");
     let phoneControl = this.user_signup.get("user_phone");
