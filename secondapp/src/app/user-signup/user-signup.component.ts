@@ -28,13 +28,36 @@ export class UserSignupComponent implements OnInit {
           user_confirm_password: new FormControl(null)
         },
         this.matchPassword.bind(this)
-      )
+      ),
+      user_notification: new FormControl("email"),
+      user_email: new FormControl(null, [
+        Validators.required,
+        Validators.email
+      ]),
+      user_phone: new FormControl(null)
     });
+    this.user_signup.get("user_notification").valueChanges.subscribe(
+      x=>this.setValidation(x)
+    );
   }
   onUserAdd() {
     console.log(this.user_signup);
   }
 
+  setValidation(value: string): void {
+    let emailControl = this.user_signup.get("user_email");
+    let phoneControl = this.user_signup.get("user_phone");
+    if (value == "email") {
+      phoneControl.clearValidators();
+      emailControl.setValidators([Validators.required, Validators.email]);
+    } else {
+      emailControl.clearValidators();
+      emailControl.setValidators(Validators.email);
+      phoneControl.setValidators(Validators.required);
+    }
+    emailControl.updateValueAndValidity();
+    phoneControl.updateValueAndValidity();
+  }
   invalidName(c: AbstractControl): { [key: string]: boolean } {
     if (this.invalidNames.indexOf(c.value) >= 0) {
       return { customError: true };
