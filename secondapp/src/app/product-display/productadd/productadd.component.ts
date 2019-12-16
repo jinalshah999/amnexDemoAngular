@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { ProductdataService } from '../productdata.service';
-import { Router } from '@angular/router';
+import { ProductdataService } from "../productdata.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-productadd",
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class ProductaddComponent implements OnInit {
   productForm: FormGroup;
-  constructor(private prodata:ProductdataService,private _router:Router) {}
+  constructor(private prodata: ProductdataService, private _router: Router) {}
 
   ngOnInit() {
     this.productForm = new FormGroup({
@@ -23,13 +23,10 @@ export class ProductaddComponent implements OnInit {
       pro_img: new FormControl(null)
     });
   }
-  onProductAdd(){
-      this.prodata.addProduct(this.productForm.value).subscribe(
-        (x:any)=>{
-          alert('added');
-//this._router.navigate(['/products']);
-        }
-      );
-
+  onProductAdd() {
+    this.prodata.addProduct(this.productForm.value).subscribe((x: any) => {
+      alert("added");
+      this._router.navigate(["/products"]);
+    });
   }
 }

@@ -20,4 +20,8 @@ export class ProductdataService {
       const head=new HttpHeaders().set('Content-Type','application/json');
       return this._http.post(this.url,body,{headers:head});
   }
+  deleteProduct(obj:Products){
+    const head=new HttpHeaders().set('Content-Type','application/json');
+    return this._http.delete(this.url+obj.pro_id,{headers:head});
+  }
 }
