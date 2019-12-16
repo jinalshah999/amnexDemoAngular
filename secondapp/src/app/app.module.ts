@@ -28,6 +28,7 @@ import { EmpEditComponent } from './emp-list/emp-edit/emp-edit.component';
 import { SignupComponent } from './signup/signup.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
 import { ProductDisplayComponent } from './product-display/product-display.component';
+import { ProductaddComponent } from './product-display/productadd/productadd.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { ProductDisplayComponent } from './product-display/product-display.compo
     EmpEditComponent,
     SignupComponent,
     UserSignupComponent,
-    ProductDisplayComponent
+    ProductDisplayComponent,
+    ProductaddComponent
   ],
   imports: [
     BrowserModule,

@@ -1,12 +1,20 @@
-<div class="row">
-  <div class="col-sm-6 col-md-4" *ngFor="let item of product" >
-    <div class="thumbnail">
-      <img src="..." alt="...">
-      <div class="caption">
-        <h3>{{item.pro_name}}</h3>
-        <p>...</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+<div class="container">
+  <div *ngIf="product.length<=0" class="row">
+    <img src="../../../assets/giphy.gif">
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-md-4" *ngFor="let item of product">
+      <div class="thumbnail">
+        <img height="150px" width="150px" src="{{item.pro_img}}" alt="...">
+        <div class="caption">
+          <h3>{{item.pro_name}}</h3>
+          <p>{{item.pro_desc}}</p>
+          <p>{{item.pro_price|currency:'INR'}}</p>
+          <p><a class="btn btn-primary" role="button"><span class="glyphicon glyphicon-trash"
+                aria-hidden="true"></span></a> </p>
+        </div>
       </div>
     </div>
   </div>
+
 </div>
