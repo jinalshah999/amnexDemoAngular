@@ -12,6 +12,7 @@ import { EmpAddComponent } from './emp-list/emp-add/emp-add.component';
 import { EmpEditComponent } from './emp-list/emp-edit/emp-edit.component';
 import { SignupComponent } from './signup/signup.component';
 import { UserSignupComponent } from './user-signup/user-signup.component';
+import { ProductDisplayComponent } from './product-display/product-display.component';
 
 const arr:Routes=[
   //{path:'',redirectTo:'/home',pathMatch:'full'},
@@ -26,6 +27,7 @@ const arr:Routes=[
   {path:'empEdit/:emp_id',component:EmpEditComponent},
   {path:'signup',component:SignupComponent},
   {path:'usersignup',component:UserSignupComponent},
+  {path:'products',component:ProductDisplayComponent},
   {path:'pagenotfound',component:PagenotfoundComponent},
   {path:'**',redirectTo:'/pagenotfound'}
 ];
