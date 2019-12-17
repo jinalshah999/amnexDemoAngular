@@ -15,6 +15,9 @@ export class ProductdataService {
   getAllProducts(){
     return this._http.get(this.url);
   }
+  getProductById(pro_id:number){
+    return this._http.get(this.url+pro_id);
+  }
   addProduct(obj:Products){
       const body=JSON.stringify(obj);
       const head=new HttpHeaders().set('Content-Type','application/json');
@@ -23,5 +26,10 @@ export class ProductdataService {
   deleteProduct(obj:Products){
     const head=new HttpHeaders().set('Content-Type','application/json');
     return this._http.delete(this.url+obj.pro_id,{headers:head});
+  }
+  editProduct(obj:Products){
+    const body=JSON.stringify(obj);
+    const head=new HttpHeaders().set('Content-Type','application/json');
+   return this._http.put(this.url+obj.pro_id,body,{headers:head});
   }
 }

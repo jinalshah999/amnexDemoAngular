@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ProductdataService } from "./productdata.service";
 import { Products } from "./products";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-product-display",
@@ -9,9 +10,15 @@ import { Products } from "./products";
 })
 export class ProductDisplayComponent implements OnInit {
   product: Products[] = [];
-  constructor(private _productData: ProductdataService) {}
+  constructor(
+    private _productData: ProductdataService,
+    private _router: Router
+  ) {}
+  onProductEdit(item: Products) {
+    this._router.navigate(["/productedit", item.pro_id]);
+  }
 
-  onProductDelete(item) {
+  onProductDelete(item: Products) {
     this._productData.deleteProduct(item).subscribe((x: any) => {
       this.product.splice(this.product.indexOf(item), 1);
     });
