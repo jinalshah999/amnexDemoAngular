@@ -1,0 +1,21 @@
+<h1>Add User</h1>
+
+<div class="container">
+  <form [formGroup]="userForm" (ngSubmit)="onUserSubmit()"  >
+  <div class="form-group">
+    <input class="form-control" placeholder="Enter Email" formControlName="user_email" >
+  </div>
+  <div class="form-group">
+    <input class="form-control" placeholder="Enter Name" formControlName="user_name" >
+  </div>
+  <div class="form-group">
+    <input class="form-control" placeholder="Enter Password" formControlName="user_password" >
+  </div>
+  <div class="form-group">
+    <input class="form-control" placeholder="Enter Mobile" formControlName="user_mobile_no" >
+  </div>
+  <div class="form-group">
+  <button type="submit" class="btn btn-primary" >Add User</button>
+  </div>
+</form>
+</div>

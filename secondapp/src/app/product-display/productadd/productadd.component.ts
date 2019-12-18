@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ProductdataService } from "../productdata.service";
 import { Router } from "@angular/router";
+import { Products } from '../products';
 
 @Component({
   selector: "app-productadd",
@@ -10,6 +11,7 @@ import { Router } from "@angular/router";
 })
 export class ProductaddComponent implements OnInit {
   productForm: FormGroup;
+  blankObj:Products=new Products(0,'',0,'',0,'','');
   constructor(private prodata: ProductdataService, private _router: Router) {}
 
   ngOnInit() {
@@ -25,8 +27,13 @@ export class ProductaddComponent implements OnInit {
   }
   onProductAdd() {
     this.prodata.addProduct(this.productForm.value).subscribe((x: any) => {
+      console.log(x);
       alert("added");
-      this._router.navigate(["/products"]);
+      this.clearForm();
+      //this._router.navigate(["/products"]);
     });
+  }
+  clearForm(){
+    this.productForm.patchValue(this.blankObj);
   }
 }
