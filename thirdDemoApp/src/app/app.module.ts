@@ -10,6 +10,8 @@ import { EditUserComponent } from './user-display/edit-user/edit-user.component'
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { LoginComponent } from './login/login.component';
+import { ShellComponent } from './shell/shell.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     EditUserComponent,
     HeaderComponent,
     HomeComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    LoginComponent,
+    ShellComponent
   ],
   imports: [
     BrowserModule,
