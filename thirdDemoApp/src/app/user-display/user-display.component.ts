@@ -21,7 +21,7 @@ export class UserDisplayComponent implements OnInit {
   }
   }
   onEdit(item:User){
-    this._router.navigate(['/users/useredit',item.user_email]);
+    this._router.navigate(['/users/edit',item.user_email]);
   }
   ngOnInit() {
     this._userdata.getAllUsers().subscribe(

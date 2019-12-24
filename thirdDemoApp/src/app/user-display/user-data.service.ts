@@ -10,6 +10,7 @@ private _url:string=environment.url+"users/"
 private _header:string='Content-Type';
 private _headervalue:string='application/json';
 
+
   constructor(private _http:HttpClient) { }
 
   getAllUsers(){

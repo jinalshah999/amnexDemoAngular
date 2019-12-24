@@ -3,14 +3,27 @@ import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  Router
+  Router,
+  Route,
+  CanLoad
 } from "@angular/router";
+import { RegistrationService } from './registration.service';
+
 
 @Injectable({
   providedIn: "root"
 })
-export class UserguardService implements CanActivate {
-  constructor(private _router:Router) {}
+export class UserguardService implements CanActivate,CanLoad {
+  constructor(private _router:Router,private _regData:RegistrationService) {}
+  canLoad(_route:Route):boolean{
+    if (localStorage.getItem("user_name") != null) {
+      return true;
+    } else {
+      this._regData.redirectURL=_route.path;
+      this._router.navigate(['/login']);
+      return false;
+    }
+  }
   canActivate(
     _next: ActivatedRouteSnapshot,
     _state: RouterStateSnapshot
@@ -19,7 +32,8 @@ export class UserguardService implements CanActivate {
     if (localStorage.getItem("user_name") != null) {
       return true;
     } else {
-      this._router.navigate(['/']);
+      this._regData.redirectURL=_state.url;
+      this._router.navigate(['/login']);
       return false;
     }
   }
