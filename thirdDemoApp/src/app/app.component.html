@@ -1,2 +1,9 @@
-<app-header  ></app-header>
-<router-outlet></router-outlet>
+<div  *ngIf="isLoading;else elseBlock" >
+  <img src="../../assets/giphy.gif" >
+</div>
+<ng-template #elseBlock >
+
+  <app-header  ></app-header>
+  <router-outlet></router-outlet>
+
+</ng-template>
