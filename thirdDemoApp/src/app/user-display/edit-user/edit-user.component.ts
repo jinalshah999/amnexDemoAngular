@@ -10,6 +10,7 @@ import { User } from '../user';
   styleUrls: ["./edit-user.component.css"]
 })
 export class EditUserComponent implements OnInit {
+  isDirty:boolean=false;
   user_email: string = "";
   userForm: FormGroup;
   onUserSubmit(){
@@ -36,6 +37,7 @@ export class EditUserComponent implements OnInit {
     );
   }
   bindUserData(user:User){
+
     this.userForm.patchValue({
       user_email: user.user_email,
       user_name: user.user_name,
