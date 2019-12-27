@@ -11,10 +11,9 @@ import { HomeComponent } from "./home/home.component";
 import { PagenotfoundComponent } from "./pagenotfound/pagenotfound.component";
 import { LoginComponent } from "./login/login.component";
 
-
 import { ProductModule } from "./product-display/product.module";
-import { HttpinterceptorsService } from './httpinterceptors.service';
-
+import { HttpinterceptorsService } from "./httpinterceptors.service";
+import { HttploggerService } from "./httplogger.service";
 
 @NgModule({
   declarations: [
@@ -32,9 +31,13 @@ import { HttpinterceptorsService } from './httpinterceptors.service';
     ReactiveFormsModule
   ],
   providers: [
-
-    {provide:HTTP_INTERCEPTORS,useClass:HttpinterceptorsService,multi:true}
-     ],
+    { provide: HTTP_INTERCEPTORS, useClass: HttploggerService, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpinterceptorsService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
