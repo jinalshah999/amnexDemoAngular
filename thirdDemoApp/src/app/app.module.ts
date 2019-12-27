@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { ReactiveFormsModule } from "@angular/forms";
 
 import { routingarr } from "./app.routing";
@@ -13,6 +13,8 @@ import { LoginComponent } from "./login/login.component";
 
 
 import { ProductModule } from "./product-display/product.module";
+import { HttpinterceptorsService } from './httpinterceptors.service';
+
 
 @NgModule({
   declarations: [
@@ -29,7 +31,10 @@ import { ProductModule } from "./product-display/product.module";
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+
+    {provide:HTTP_INTERCEPTORS,useClass:HttpinterceptorsService,multi:true}
+     ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
