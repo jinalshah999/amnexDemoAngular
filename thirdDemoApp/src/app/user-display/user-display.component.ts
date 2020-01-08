@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { UserDataService } from "./user-data.service";
 import { User } from "./user";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-user-display",
@@ -9,29 +9,30 @@ import { Router } from '@angular/router';
   styleUrls: ["./user-display.component.css"]
 })
 export class UserDisplayComponent implements OnInit {
+  user$ = this._userdata.users$;
   users: User[] = [];
-  constructor(private _userdata: UserDataService,private _router:Router) {}
+  constructor(private _userdata: UserDataService, private _router: Router) {}
   onDelete(item: User) {
-    if(confirm('Are u sure?')){
-    this._userdata.deleteUser(item).subscribe(x => {
-      if (x['affectedRows'] ==1) {
-        this.users.splice(this.users.indexOf(item), 1);
-      }
-    });
+    if (confirm("Are u sure?")) {
+      this._userdata.deleteUser(item).subscribe(x => {
+        if (x["affectedRows"] == 1) {
+          this.users.splice(this.users.indexOf(item), 1);
+        }
+      });
+    }
   }
-  }
-  onEdit(item:User){
-    this._router.navigate(['/users/edit',item.user_email]);
+  onEdit(item: User) {
+    this._router.navigate(["/users/edit", item.user_email]);
   }
   ngOnInit() {
-    this._userdata.getAllUsers().subscribe(
-      x => {
-        this.users = x;
-      },
-      function(error) {
-        console.log(error);
-      },
-      function() {}
-    );
+    // this._userdata.getAllUsers().subscribe(
+    //   x => {
+    //     this.users = x;
+    //   },
+    //   function(error) {
+    //     console.log(error);
+    //   },
+    //   function() {}
+    // );
   }
 }

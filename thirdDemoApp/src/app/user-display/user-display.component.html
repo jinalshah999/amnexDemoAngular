@@ -12,7 +12,7 @@
       <th>Actions</th>
     </thead>
     <tbody>
-      <tr *ngFor="let item of users">
+      <tr *ngFor="let item of (user$ |async) as User ">
         <td>{{item.user_name}}</td>
         <td>{{item.user_email}}</td>
         <td>{{item.user_mobile_no}}</td>
