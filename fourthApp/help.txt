@@ -1,0 +1,79 @@
+//category service 
+
+categories$ = this.http
+    .get<ProductCategory[]>(this.productCategoriesUrl)
+    .pipe(
+      tap(data => console.log("categories ", JSON.stringify(data))),
+      catchError(this.handleError)
+    );
+
+
+
+//product service
+
+productswithcategories$ = combineLatest(
+    this.products$,
+    this.categoryService.categories$
+  ).pipe(
+    map(([products, category]) => {
+      return products.map(
+        products =>
+          ({
+            ...products,
+            price: products.price * 1.5,
+            category: category.find(x => products.categoryId === x.id).name
+          } as Product)
+      );
+    }),
+    tap(data=>console.log('productswithcategories',JSON.stringify(data))),
+    catchError(this.handleError)
+  );
+
+
+//product list
+
+//use this to show error handling with onpush
+
+  private errorMessageSubject=new Subject<string>();
+  errorMessageAction$=this.errorMessageSubject.asObservable();
+
+
+
+categories$ = this.productcategoryService.categories$.pipe(
+    catchError(error => {
+      //this.errorMessage = <any>error;
+     // console.log(this.errorMessage);
+      return EMPTY;
+    })
+  );
+
+
+ private categorySelectedSubject = new Subject<number>();
+  categorySelectedAction$ = this.categorySelectedSubject.asObservable();
+
+  productsimplefilter$ = combineLatest([
+    this.productService.productswithcategories$,
+    this.categorySelectedAction$
+  ]).pipe(
+
+    map(([products, categoryId]) => {
+      return products.filter(x =>
+        categoryId ? x.categoryId === categoryId : true
+      );
+    }),
+    catchError((error) => {
+      //this.errorMessage = <any>error;
+      this.errorMessageSubject.next(error);
+      //console.log(this.errorMessage);
+      return EMPTY;
+    })
+  );
+
+  //use this map for seleceted id
+  // map(products => {
+  //   return products.filter(x =>
+  //     this.selectedCategroyId
+  //       ? x.categoryId === this.selectedCategroyId
+  //       : true
+  //   );
+  // })
