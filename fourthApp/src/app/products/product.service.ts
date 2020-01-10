@@ -1,8 +1,28 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
-import { Observable, throwError, combineLatest } from "rxjs";
-import { catchError, tap, map } from "rxjs/operators";
+import {
+  Observable,
+  throwError,
+  combineLatest,
+  Subject,
+  merge,
+  BehaviorSubject,
+  of,
+  from,
+  EMPTY
+} from "rxjs";
+import {
+  catchError,
+  tap,
+  map,
+  scan,
+  shareReplay,
+  filter,
+  switchMap,
+  mergeMap,
+  toArray
+} from "rxjs/operators";
 
 import { Product } from "./product";
 import { Supplier } from "../suppliers/supplier";
@@ -21,11 +41,15 @@ export class ProductService {
     private productcategoryService: ProductCategoryService,
     private supplierService: SupplierService
   ) {}
+
+  // All products
   products$ = this.http.get<Product[]>(this.productsUrl).pipe(
     tap(data => console.log("products ", JSON.stringify(data))),
     catchError(this.handleError)
   );
 
+  // Combine products with categories
+  // Map to the revised shape.
   productswithcategories$ = combineLatest([
     this.products$,
     this.productcategoryService.categories$
@@ -36,7 +60,7 @@ export class ProductService {
           ({
             ...products,
             price: products.price * 1.5,
-           category:category.find(x=>x.id===products.categoryId).name
+            category: category.find(x => x.id === products.categoryId).name
           } as Product)
       );
     }),
@@ -44,6 +68,97 @@ export class ProductService {
     catchError(this.handleError)
   );
 
+  /*
+    Allows adding of products to the Observable
+  */
+
+  //Action Stream
+
+  private productInsertedSubject = new Subject<Product>();
+  productInsertedAction$ = this.productInsertedSubject.asObservable();
+
+  productsWithAdd$ = merge(
+    this.productswithcategories$,
+    this.productInsertedAction$
+  ).pipe(
+    scan((acc: Product[], value: Product) => [...acc, value]),
+    tap(data => console.log("products with add", JSON.stringify(data))),
+    catchError(err => {
+      return throwError(err);
+    })
+  );
+
+  addProduct(newProduct?: Product) {
+    newProduct = newProduct || this.fakeProduct();
+    this.productInsertedSubject.next(newProduct);
+  }
+
+  // Action stream for product selection
+  // Default to 0 for no product
+  // Must have a default so the stream emits at least once.
+
+  private productSelectedSubject = new BehaviorSubject<number>(0);
+  productSelectedAction$ = this.productSelectedSubject.asObservable();
+
+  // Currently selected product
+  // Used in both List and Detail pages,
+  // so use the shareReply to share it with any component that uses it
+
+  selectedProduct$ = combineLatest([
+    this.productswithcategories$,
+    this.productSelectedAction$
+  ]).pipe(
+    map(([products, selectedProductId]) => {
+      return products.find(product => product.id === selectedProductId);
+    }),
+    tap(data => console.log("selected Product ", JSON.stringify(data))),
+    shareReplay(1),
+    catchError(this.handleError)
+  );
+
+  //change the selectedProduct
+  selectedProductChanged(productId: number) {
+    this.productSelectedSubject.next(productId);
+  }
+
+  // Suppliers for the selected product
+  // Finds suppliers from download of all suppliers
+  // Add a catchError so that the display appears
+  // even if the suppliers cannot be retrieved.
+  // Note that it must return an empty array and not EMPTY
+  // or the stream will complete.
+  selectedProductSuppliers$ = combineLatest([
+    this.selectedProduct$,
+    this.supplierService.suppliers$.pipe(
+      catchError(err => of([] as Supplier[]))
+    )
+  ]).pipe(
+    map(([selectedProduct, suppliers]) =>
+      suppliers.filter(supplier =>
+        selectedProduct
+          ? selectedProduct.supplierIds.includes(supplier.id)
+          : EMPTY
+      )
+    )
+  );
+
+
+   // Suppliers for the selected product
+  // Only gets the suppliers it needs
+  selectedProductSuppliers2$ = this.selectedProduct$.pipe(
+    filter(selectedProduct => Boolean(selectedProduct)),
+    switchMap(selectedProduct =>
+      from(selectedProduct.supplierIds).pipe(
+        mergeMap(supplierId =>
+          this.http.get<Supplier>(`${this.suppliersUrl}/${supplierId}`)
+        ),
+        toArray(),
+        tap(suppliers =>
+          console.log("product suppliers", JSON.stringify(suppliers))
+        )
+      )
+    )
+  );
   private handleError(err: any) {
     // in a real world app, we may send the server to some remote logging infrastructure
     // instead of just logging it to the console

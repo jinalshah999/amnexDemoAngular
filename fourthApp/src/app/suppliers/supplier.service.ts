@@ -2,12 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { throwError } from 'rxjs';
+import { Supplier } from './supplier';
+import { tap, shareReplay, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupplierService {
   suppliersUrl = 'api/suppliers';
+
+
+  // All Suppliers
+  suppliers$ = this.http.get<Supplier[]>(this.suppliersUrl)
+    .pipe(
+      tap(data => console.log('suppliers', JSON.stringify(data))),
+      shareReplay(1),
+      catchError(this.handleError)
+    );
 
   constructor(private http: HttpClient) { }
 

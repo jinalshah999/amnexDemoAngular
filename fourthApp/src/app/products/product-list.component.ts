@@ -12,47 +12,71 @@ import { ProductCategoryService } from "../product-categories/product-category.s
 export class ProductListComponent {
   pageTitle = "Product List";
 
-  private errorMessageSubject=new Subject<string>();
-  errorMessageAction$=this.errorMessageSubject.asObservable();
+  //Error handling
+  private errorMessageSubject = new Subject<string>();
+  errorMessageAction$ = this.errorMessageSubject.asObservable();
 
-   constructor(
+  constructor(
     private productService: ProductService,
     private prodcutcategoryService: ProductCategoryService
   ) {}
-  products$ = this.productService.productswithcategories$.pipe(
-    catchError(error => {
-     this.errorMessageSubject.next("something went wrong");
-      return EMPTY;
-    })
-  );
 
+
+
+  //get all categories for dropdown filter
   categories$ = this.prodcutcategoryService.categories$.pipe(
     catchError(error => {
-    this.errorMessageSubject.next(error);
+      this.errorMessageSubject.next(error);
       return EMPTY;
     })
   );
 
+  //action stream for selected category
   private categorySelectedSubject = new BehaviorSubject<number>(0);
   categorySelectedAction$ = this.categorySelectedSubject.asObservable();
 
-  prodcutswithactionStream$=combineLatest([
-    this.products$,
+  //emit the selected category to observable
+  onSelected(categoryId: string): void {
+    this.categorySelectedSubject.next(+categoryId); //use + to convert to number
+  }
+
+  productswithadd$=combineLatest([
+    this.productService.productsWithAdd$,
     this.categorySelectedAction$
   ]).pipe(
     map(([products, categoryId]) => {
       return products.filter(x =>
         categoryId ? x.categoryId === categoryId : true
       );
-    }),
+    })
   );
 
+  //adding new record to the collection
   onAdd(): void {
-    console.log("Not yet implemented");
+   this.productService.addProduct();
   }
 
-  onSelected(categoryId: string): void {
-    this.categorySelectedSubject.next(+categoryId);
-   // console.log(this.selectedCategroyId);
-  }
+
 }
+
+
+//fetch all products with categories
+// products$ = this.productService.productswithcategories$.pipe(
+//   catchError(error => {
+//     this.errorMessageSubject.next("something went wrong");
+//     return EMPTY;
+//   })
+// );
+
+//merge action stream with data stream i.e. with products$
+
+// prodcutswithactionStream$ = combineLatest([
+//   this.products$,
+//   this.categorySelectedAction$
+// ]).pipe(
+//   map(([products, categoryId]) => {
+//     return products.filter(x =>
+//       categoryId ? x.categoryId === categoryId : true
+//     );
+//   })
+// );
